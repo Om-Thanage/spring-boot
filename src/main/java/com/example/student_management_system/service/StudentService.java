@@ -18,7 +18,7 @@ public class StudentService {
         return studentRepository.findAll();
     }
 
-    public Optional<Student> getStudentById(Long id) {
+    public Optional<Student> getStudentById(String id) {
         return studentRepository.findById(id);
     }
 
@@ -26,7 +26,7 @@ public class StudentService {
         return studentRepository.save(student);
     }
 
-    public Student updateStudent(Long id, Student studentDetails) {
+    public Student updateStudent(String id, Student studentDetails) {
         Student student = studentRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Student not found"));
         student.setName(studentDetails.getName());
@@ -36,7 +36,14 @@ public class StudentService {
         return studentRepository.save(student);
     }
 
-    public void deleteStudent(Long id) {
-        studentRepository.deleteById(id);
+    public void deleteStudent(String email) {
+        studentRepository.deleteByEmail(email);
+    }
+
+    public Student updateMarks(String id, Double marks) {
+        Student student = studentRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Student not found"));
+        student.setMarks(marks);
+        return studentRepository.save(student);
     }
 }
